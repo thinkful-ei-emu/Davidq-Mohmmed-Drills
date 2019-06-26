@@ -18,16 +18,20 @@ export default class RouletteGun extends React.Component{
         }
     }
 
-    handleClick = e =>{     
-        this.setState({
-            spinningTheChamber: true
-        },()=>{this.timeOut = setTimeout(() =>{
-            this.setState({
-                spinningTheChamber: false,
-                chamber: Math.ceil(Math.random()*8),
-            }),2000}
-        }));
-        
+    handleClick = e =>{//always use arrow function when event handling
+      
+      this.setState({spinningTheChamber:true},()=>{//this.setState is async so use callback function
+        this.timer = setTimeout(()=>{
+          this.setState({
+            spinningTheChamber:false,
+            chamber: Math.ceil(Math.random()*8)
+          })
+        },2000);
+      });
+      console.log(this.state);
+    }
+    componentWillUnmount(){
+      clearTimeout(this.timer);
     }
 
     render(){
